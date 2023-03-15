@@ -1,0 +1,24 @@
+name: "Publish GitHub Action"
+on:
+  push:
+    branches:    
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build
+    - name: Publish to Distributed Press 
+      uses: jackyzha0/actions-distributed-press@v1.0.0
+      with:
+        publish_dir: out
+        dp_url: https://api.dp.chanterelle.xyz
+        refresh_token: ${{ secrets.REFRESH_TOKEN }} 
+        site_url: docs.distributed.press
