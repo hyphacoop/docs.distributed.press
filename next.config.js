@@ -4,7 +4,10 @@ const withNextra = require('nextra')({
 })
  
 nextraConfig = withNextra({
-  output: 'export'
+  output: 'export',
+  images: {
+    unoptimized: true,
+  }
 })
 
 delete nextraConfig.rewrites
