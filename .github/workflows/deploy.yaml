@@ -16,7 +16,7 @@ jobs:
     - run: npm ci
     - run: npm run build
     - name: Publish to Distributed Press 
-      uses: jackyzha0/actions-distributed-press@v1.0.1
+      uses: jackyzha0/actions-distributed-press@v1.0.2
       with:
         publish_dir: out
         dp_url: https://api.dp.chanterelle.xyz
