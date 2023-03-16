@@ -1,6 +1,6 @@
 export default {
   logo: <strong>Distributed Press</strong>,
   project: {
-    link: 'https://github.com/jackyzha0/docs.distributed.press',
+    link: 'https://github.com/hyphacoop/docs.distributed.press',
   },
 }

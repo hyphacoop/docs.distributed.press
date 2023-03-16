@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jackyzha0/docs.distributed.press.git"
+    "url": "git+https://github.com/hyphacoop/docs.distributed.press.git"
   },
   "author": "Jacky Zhao <j.zhao2k19@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jackyzha0/docs.distributed.press/issues"
+    "url": "https://github.com/hyphacoop/docs.distributed.press/issues"
   },
   "dependencies": {
     "next": "^13.0.6",
