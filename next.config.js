@@ -10,7 +10,5 @@ nextraConfig = withNextra({
   }
 })
 
-console.log(nextraConfig.rewrites.toString())
-
 delete nextraConfig.rewrites
 module.exports = nextraConfig
