@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 18 
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 18 
     - run: npm ci
     - run: npm run build
     - name: Publish to Distributed Press 
-      uses: jackyzha0/actions-distributed-press@v1.0.9
+      uses: jackyzha0/actions-distributed-press@v1.0.10
       with:
         publish_dir: out
         dp_url: https://api.dp.chanterelle.xyz
