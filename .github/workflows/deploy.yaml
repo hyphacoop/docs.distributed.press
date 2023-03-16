@@ -21,4 +21,4 @@ jobs:
         publish_dir: out
         dp_url: https://api.dp.chanterelle.xyz
         refresh_token: ${{ secrets.REFRESH_TOKEN }} 
-        site_url: docs.distributed.press
+        site_url: dp-docs 
