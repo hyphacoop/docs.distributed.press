@@ -1,4 +1,10 @@
 {
-  "index": "Welcome to Distributed Press",
-  "getting-started": "Getting Started"
+  "index": "Getting Started",
+  "overview": "Technical Overview",
+  "protocols": "Supported Protocols",
+  "api-reference": "API Reference",
+  "self-hosting": "Self-hosting Distributed Press",
+  "dns": "DNS",
+  "deployment": "Deploying sites",
+  "docs": "How to update documentation"
 }

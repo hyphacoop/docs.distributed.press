@@ -1,0 +1,9 @@
+import RouteDescription from '../../components/RouteDescription.jsx'
+
+# Sites
+Manages a site's static files and configuration (which protocols to seed to, domain, etc.)
+
+## Getting a site
+<RouteDescription httpVerb="GET" path="/v1/sites/:domain"/>
+
+Returns the configuration and info about the site keyed by `domain`.

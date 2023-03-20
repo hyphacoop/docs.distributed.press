@@ -1,0 +1,17 @@
+# Editing Documentation
+You are currently looking at the documentation for [Distributed Press](https://distributed.press/)! 
+The source for this site currently lives on [GitHub](https://github.com/hyphacoop/docs.distributed.press).
+
+This site uses [Nextra](https://nextra.site/) which uses MDX for content.
+**For most copy-editing changes, you can likely just edit the appropriate MDX file for each page.**
+To find the appropriate file for a page, you can click the `Edit this page` link on the right sidebar of that page. 
+
+This site is automatically re-deployed using the Distributed Press [GitHub Action](./deployment/github-actions) so
+any changes are reflected on the site almost immediately.
+
+## Structure
+For more involved changes, here is a rough overview of what's what:
+
+- `theme.config.jsx`: Configuration for the Nextra theme, including logo, colours, footer, etc.
+- `pages/_meta.json`: Page-specific metadata, controls titles and ordering in the sidebar 
+- `.github/workflows/deploy.yaml`: GitHub workflow for deploying the current site 
