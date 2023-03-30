@@ -1,7 +1,7 @@
 name: "Publish GitHub Action"
 on:
   push:
-    branches:    
+    branches:
       - main
 
 jobs:
@@ -9,16 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js 18 
+    - name: Use Node.js 18
       uses: actions/setup-node@v3
       with:
-        node-version: 18 
+        node-version: 18
     - run: npm ci
     - run: npm run build
-    - name: Publish to Distributed Press 
-      uses: jackyzha0/actions-distributed-press@v1.1.0
+    - name: Publish to Distributed Press
+      uses: hyphacoop/actions-distributed-press@v1.1.0
       with:
         publish_dir: out
-        dp_url: https://api.dp.chanterelle.xyz
-        refresh_token: ${{ secrets.REFRESH_TOKEN }} 
-        site_url: docs.distributed.press 
+        dp_url: https://srv2.distributed.press
+        refresh_token: ${{ secrets.REFRESH_TOKEN }}
+        site_url: docs.distributed.press
