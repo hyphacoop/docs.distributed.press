@@ -1,9 +1,180 @@
 import RouteDescription from '../../components/RouteDescription.jsx'
+import { Tab, Tabs } from 'nextra-theme-docs'
+import AuthedEndpoint from '../../components/AuthedEndpoint.mdx' 
+import { Callout } from 'nextra-theme-docs'
 
 # Sites
 Manages a site's static files and configuration (which protocols to seed to, domain, etc.)
 
-## Getting a site
+<AuthedEndpoint/>
+
+## Getting the information of site
 <RouteDescription httpVerb="GET" path="/v1/sites/:domain"/>
 
-Returns the configuration and info about the site keyed by `domain`.
+<Tabs items={['Input Payload', 'Success Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `domain` and 
+    returns the configuration and info about the site.
+  </Tab>
+  <Tab>
+    ```json
+    {
+      "id": string,
+      "domain": string,
+      "protocols": {
+        "http": boolean,
+        "hyper": boolean,
+        "ipfs": boolean
+      },
+      "links": {
+        "http": {
+          "enabled": boolean,
+          "link": string 
+        },
+        "hyper": {
+          "gateway": string,
+          "raw": string,
+          "dnslink": string,
+          "enabled": boolean,
+          "link": string 
+        },
+        "ipfs": {
+          "gateway": string,
+          "cid": string,
+          "pubKey": string,
+          "dnslink": string,
+          "enabled": boolean,
+          "link": string 
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab>
+  - `404`: If the domain does not exist 
+  - `401`: If the associated auth token is invalid
+  </Tab>
+</Tabs>
+
+## Making a site 
+<RouteDescription httpVerb="POST" path="/v1/sites"/>
+
+<Tabs items={['Input Payload', 'Success Payload', 'Errors']}>
+  <Tab>
+    Takes a JSON payload containing the domain of the site
+    along with which protocols to seed to. 
+
+    ```json
+    {
+      "domain": string,
+      "protocols": {
+        "http": boolean,
+        "hyper": boolean,
+        "ipfs": boolean
+      }
+    }
+    ```
+    <Callout type="warning">
+    Note that this does
+    *not* include the actual site content itself. See the endpoint for
+    uploading content to do that.
+    </Callout>
+  </Tab>
+  <Tab>
+    ```json
+    {
+      "id": string,
+      "domain": string,
+      "protocols": {
+        "http": boolean,
+        "hyper": boolean,
+        "ipfs": boolean
+      },
+      "links": {
+        "http": {
+          "enabled": boolean,
+          "link": string 
+        },
+        "hyper": {
+          "gateway": string,
+          "raw": string,
+          "dnslink": string,
+          "enabled": boolean,
+          "link": string 
+        },
+        "ipfs": {
+          "gateway": string,
+          "cid": string,
+          "pubKey": string,
+          "dnslink": string,
+          "enabled": boolean,
+          "link": string 
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab>
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges (i.e. did not create the site or is not an admin)
+  - `400`: If domain is an [invalid hostname](https://www.npmjs.com/package/is-valid-hostname)
+  </Tab>
+</Tabs>
+
+## Deleting a site 
+<RouteDescription httpVerb="DELETE" path="/v1/sites/:domain"/>
+
+<Tabs items={['Input Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `domain` and deletes the site.
+  </Tab>
+  <Tab>
+  - `404`: If the site is not found
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges (i.e. did not create the site or is not an admin)
+  </Tab>
+</Tabs>
+
+
+## Updating a site's configuration
+<RouteDescription httpVerb="POST" path="/v1/sites/:domain"/>
+
+<Tabs items={['Input Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `domain` and a JSON payload containing details about 
+    which protocols to seed to. 
+
+    ```json
+    {
+      "protocols": {
+        "http": boolean,
+        "hyper": boolean,
+        "ipfs": boolean
+      }
+    }
+    ```
+  </Tab>
+  <Tab>
+  - `404`: If the site is not found
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges (i.e. did not create the site or is not an admin)
+  </Tab>
+</Tabs>
+
+## Uploading content to a site 
+<RouteDescription httpVerb="PUT" path="/v1/sites/:domain"/>
+<br/>
+<RouteDescription httpVerb="PATCH" path="/v1/sites/:domain"/>
+
+<Tabs items={['Input Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `domain` and uploads the attached tarball as the site content.
+
+    The body must be of type `multipart/form-data` with a single `tar.gz` file which will get extracted out and served. 
+    Using the `PUT` endpoing will delete any existing files before uploading the new files.
+    `PATCH` on the other hand, will only upload new files in the tarball.
+  </Tab>
+  <Tab>
+  - `404`: If the site is not found
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges (i.e. did not create the site or is not an admin)
+  - `400`: Tarball is too large (limit `5GB`)
+  - `500`: Other internal error
+  </Tab>
+</Tabs>

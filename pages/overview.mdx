@@ -1,6 +1,31 @@
 # Technical Overview
 
-- DNS
-- API Server
-  - Site storage
-  - Configuration storage
+Distributed Press has many components that work together.
+
+## API Server
+The API server is how clients interface with Distributed Press. 
+
+Clients make authenticated HTTP requests to make updates to resources 
+like publishers, admins, and sites.
+
+The API server is responsible for locally storing site data to serve and 
+seed over the various [peer-to-peer protocols](./protocols) that Distributed Press supports.
+
+See the [API reference](./api-reference/) for more details.
+
+
+## DNS
+The DNS server runs alongside the Distributed Press API and is responsible
+for resolving DNS queries for sites that it hosts.
+
+This means that if you own the domain for the site you host (e.g. `distributed.press`),
+you can add an `NS` record through your domain registrar to tell it to look at
+Distributed Press for where to find where the site is actually hosted.
+
+Then, the Distributed Press DNS server will respond with a `_dnslink` TXT
+record that will detail an appropriate HTTP gateway to reach that site from.
+
+This means that *anyone* can access a site published using Distributed Press 
+using a normal browser.
+
+See the page on [DNS](./dns) for more details on how to set this up.

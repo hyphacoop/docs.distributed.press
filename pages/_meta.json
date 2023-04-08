@@ -5,7 +5,7 @@
   "protocols": "Supported Protocols",
   "api-reference": "API Reference",
   "self-hosting": "Self-hosting Distributed Press",
-  "dns": "DNS",
+  "dns": "Setting up DNS",
   "deployment": "Deploying sites",
   "docs": "How to update documentation"
 }
