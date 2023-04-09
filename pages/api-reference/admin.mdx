@@ -1,0 +1,52 @@
+import RouteDescription from '../../components/RouteDescription.jsx'
+import AccessList from '../../components/AccessList.jsx'
+import { Tab, Tabs } from 'nextra-theme-docs'
+import AuthedEndpoint from '../../components/AuthedEndpoint.mdx' 
+import { Callout } from 'nextra-theme-docs'
+
+# Admin
+Manages admins which have the authority to edit publishers and sites.
+
+<AuthedEndpoint/>
+
+## Creating a new admin 
+<RouteDescription httpVerb="POST" path="/v1/admin"/>
+<AccessList adminAccess />
+
+<Tabs items={['Input Payload', 'Success Payload', 'Errors']}>
+  <Tab>
+    Takes a JSON payload containing the name of the admin.
+    ```typescript
+    type InputPayload = {
+      "name": string
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```typescript
+    type ResultPayload = {
+      "id": string,
+      "name": string
+    }
+    ```
+  </Tab>
+  <Tab>
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges
+  - `400`: If domain is an [invalid hostname](https://www.npmjs.com/package/is-valid-hostname)
+  </Tab>
+</Tabs>
+
+## Deleting a admin 
+<RouteDescription httpVerb="DELETE" path="/v1/admin/:id"/>
+<AccessList adminAccess />
+
+<Tabs items={['Input Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `id` and deletes the admin.
+  </Tab>
+  <Tab>
+  - `404`: If the site is not found
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges
+  </Tab>
+</Tabs>
+

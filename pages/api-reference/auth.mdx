@@ -1,0 +1,80 @@
+import RouteDescription from '../../components/RouteDescription.jsx'
+import AccessList from '../../components/AccessList.jsx'
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+# Authorization
+
+Authorization is done using [JWT tokens](https://en.wikipedia.org/wiki/JSON_Web_Token).
+Tokens are issued to specific users (either a publisher or admin with a specific ID).
+They contain a set of capabilities that the token represents.
+
+```typescript
+type Token = {
+  tokenId: string,
+  issuedTo: string,
+  expires: number,
+  capabilities: ('admin' | 'publisher' | 'refresh')[]
+}
+```
+
+By default, tokens also expire after a week. This means that you must refresh
+a token for a new one before it expires.
+
+
+## Acquiring a token
+### Exchanging or refreshing an existing token
+<RouteDescription httpVerb="POST" path="/v1/auth/exchange"/>
+<AccessList ownerAccess adminAccess />
+
+<Tabs items={['Input Payload', 'Success Payload', 'Errors']}>
+  <Tab>
+    Exchange an old token for a new one with a subset of initial capabilities and an updated expiry time.
+    Takes in the old token from the `Authorization` header.
+
+    Input payload:
+    ```typescript
+    type InputPayload = {
+      "issuedTo": string,
+      "capabilities": ('admin' | 'publisher' | 'refresh')[]
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```typescript
+    // the signed token in string form
+    type ResultPayload = string 
+    ```
+  </Tab>
+  <Tab>
+  - `401`: No token in `Authorization` header
+  - `401`: The token is not a refresh token
+  - `401`: Requesting more permissions in new token than the existing token has
+  </Tab>
+</Tabs>
+
+### Getting the 'root' admin token 
+To generate the auth token necessary to make the very first admin user, you must
+use the 'root' admin token. This assumes **you have access to the machine on which your
+instance of Distributed Press runs on.** This is usually only the case if you are the administrator
+which set up the instance.
+
+In the root directory of `api.distributed.press`, execute `npm run make-admin` which will print out the token to stdout.
+
+If this is *not* you, please ask your administrator to issue a token to you.
+
+## Revoking a token
+<RouteDescription httpVerb="DELETE" path="/v1/auth/revoke/:tokenId"/>
+<AccessList adminAccess />
+
+
+<Tabs items={['Input Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `tokenId` and revokes that token along with all tokens issued using that token recursively.
+    Note that revoking a non-existent token is a no-op.
+  </Tab>
+  <Tab>
+  - `401`: Token expired 
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges
+  </Tab>
+</Tabs>
+

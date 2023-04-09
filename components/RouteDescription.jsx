@@ -1,3 +1,5 @@
+import Pill from "./Pill"
+
 export default function({ httpVerb, path }) {
   let colour = "#ADADAD"
   switch (httpVerb.toUpperCase()) {
@@ -19,8 +21,7 @@ export default function({ httpVerb, path }) {
   }
 
   return (<div style={{ display: "inline-block", fontSize: "1em", margin: "0.5em 0" }}>
-    <span style={{ backgroundColor: colour, color: "white", padding: "0.1em 0.3em", borderRadius: "5px", marginRight: "0.5em" }}>{httpVerb.toUpperCase()}</span>
+    <Pill colour={colour}>{httpVerb.toUpperCase()}</Pill>
     <code style={{ display: "inline-block" }}>{path}</code>
   </div>)
-
 }

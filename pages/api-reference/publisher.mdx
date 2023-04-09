@@ -1,0 +1,78 @@
+import RouteDescription from '../../components/RouteDescription.jsx'
+import AccessList from '../../components/AccessList.jsx'
+import { Tab, Tabs } from 'nextra-theme-docs'
+import AuthedEndpoint from '../../components/AuthedEndpoint.mdx' 
+import { Callout } from 'nextra-theme-docs'
+
+# Publisher
+Manages publishers which have the authority to edit sites.
+A publisher can only be edited by that publisher or an admin account 
+
+<AuthedEndpoint/>
+
+## Getting the information of publisher
+<RouteDescription httpVerb="GET" path="/v1/publisher/:id"/>
+<AccessList publisherAccess adminAccess />
+
+<Tabs items={['Input Payload', 'Success Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `id` and 
+    returns information about the publisher.
+  </Tab>
+  <Tab>
+    ```typescript
+    type ResultPayload = {
+      "id": string,
+      "name": string,
+      "ownedSites": string[] 
+    }
+    ```
+  </Tab>
+  <Tab>
+  - `404`: If the publisher does not exist 
+  - `401`: If the associated auth token is invalid
+  </Tab>
+</Tabs>
+
+## Creating a new publisher 
+<RouteDescription httpVerb="POST" path="/v1/publisher"/>
+<AccessList adminAccess />
+
+<Tabs items={['Input Payload', 'Success Payload', 'Errors']}>
+  <Tab>
+    Takes a JSON payload containing the name of the publisher.
+    ```typescript
+    type InputPayload = {
+      "name": string
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```typescript
+    type ResultPayload = {
+      "id": string,
+      "name": string,
+      "ownedSites": string[] 
+    }
+    ```
+  </Tab>
+  <Tab>
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges
+  - `400`: If domain is an [invalid hostname](https://www.npmjs.com/package/is-valid-hostname)
+  </Tab>
+</Tabs>
+
+## Deleting a publisher 
+<RouteDescription httpVerb="DELETE" path="/v1/publisher/:id"/>
+<AccessList adminAccess />
+
+<Tabs items={['Input Payload', 'Errors']}>
+  <Tab>
+    Takes a single path parameter `id` and deletes the publisher.
+  </Tab>
+  <Tab>
+  - `404`: If the site is not found
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges
+  </Tab>
+</Tabs>
+
