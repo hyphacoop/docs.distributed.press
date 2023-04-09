@@ -9,7 +9,6 @@ that uses GitHub actions, `actions-distributed-press` allows you to
 just add a single step to your actions workflow to also deploy a bundle 
 of static files to Distributed Press.
 
-
 <Callout type="info">
 Distributed Press only supports deploying a folder of static files.
 Most frameworks like Next.js, React, and Hugo, allow you to 'export'
@@ -24,7 +23,7 @@ To your existing action workflow, add a step to publish to Distributed Press. Ad
 specified Distributed Press API instance.
 
 The name of the secret should be `REFRESH_TOKEN` and the value should be the JWT itself.
-If you are unsure where to get a JWT token, see the reference on [authorization](/api-reference/auth)
+If you are unsure where to get a JWT token, see the reference on [authorization](/api-reference/auth).
 
 ```yaml {6}
 jobs:

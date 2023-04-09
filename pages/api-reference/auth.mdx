@@ -3,7 +3,6 @@ import AccessList from '../../components/AccessList.jsx'
 import { Tab, Tabs } from 'nextra-theme-docs'
 
 # Authorization
-
 Authorization is done using [JWT tokens](https://en.wikipedia.org/wiki/JSON_Web_Token).
 Tokens are issued to specific users (either a publisher or admin with a specific ID).
 They contain a set of capabilities that the token represents.
@@ -38,6 +37,8 @@ a token for a new one before it expires.
       "capabilities": ('admin' | 'publisher' | 'refresh')[]
     }
     ```
+
+    Ensure that `issuedTo` is a valid publisher or admin. [Create one](/api-reference/publisher) if the user doesn't have a publisher/admin acount.
   </Tab>
   <Tab>
     ```typescript
