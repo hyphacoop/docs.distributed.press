@@ -10,6 +10,9 @@ export default {
   nextThemes: {
     defaultTheme: 'light'
   },
+  sidebar: {
+    defaultMenuCollapseLevel: 1,
+  },
   footer: {
     text: <div>
       <p><a href="https://hypha.coop" target="_blank">Hypha Worker Co-operative Inc.</a> {new Date().getFullYear()} ©</p>
