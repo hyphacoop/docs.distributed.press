@@ -1,0 +1,49 @@
+# Self-Hosting
+
+Distributed Press uses [Ansible](https://www.ansible.com/) to make setting up
+your own Distributed Press instance fast and simple.
+
+These scripts can help you deploy Distributed Press on your own VPS via SSH.
+
+The default playbook will deploy your `distributed.press` instance and set up all the appropriate Firewall configurations
+to allow Distributed Press to work properly.
+
+Please ensure you have both Python 3 and Ansible installed before proceeding with the setup steps.
+
+## Steps
+
+1. Edit `inventory.yml` to specify your own domain to run the scripts on as well as any variables you wish to set.
+
+   Specifically, you *must* specify the `distributed_press_domain` do be your server, and your `distributed_press_letsencrypt_email` for registering the HTTPS certificate.
+   You *may* specify a list of domains in `distributed_press_served_sites` which specifies which domains you'd like to serve over HTTPS in addition to the peer-to-peer protocols.
+
+```yaml filename="inventory.yml" {4-5}
+all:
+  # Set custom variables here, like custom ports for listening
+  vars:
+    distributed_press_domain: "example.com"
+    distributed_press_letsencrypt_email: "example@example.com"
+    distributed_press_served_sites: []
+  children:
+    distributed_press:
+      hosts:
+        example.com:
+          ansible_user: root
+```
+
+2. Install the dependencies
+  
+   ```bash
+   $ ansible-galaxy install -r ./requirements.yml
+   ```
+3. Execute the playbook
+   ```bash
+   # execute the Ansible playbook with user defined variables
+   $ ansible-playbook distributed_press.yml -i inventory.yml
+   ```
+4. After you deploy your server you will need to add `_dnslink` records to your DP instance via `NS` records. 
+   e.g. `NS _dnslink.example.com example.com`
+
+## Debugging
+1. Check the status of the service: `systemctl status distributed.press`
+2. Follow the logs of the service: `journalctl -fu distributed.press`
