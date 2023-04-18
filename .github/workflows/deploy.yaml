@@ -19,6 +19,6 @@ jobs:
       uses: hyphacoop/actions-distributed-press@v1.1.0
       with:
         publish_dir: out
-        dp_url: https://srv2.distributed.press
+        dp_url: https://api.distributed.press
         refresh_token: ${{ secrets.REFRESH_TOKEN }}
         site_url: docs.distributed.press
