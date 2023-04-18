@@ -1,0 +1,36 @@
+import { Callout } from 'nextra-theme-docs'
+import APIWarning from '../../components/ApiWarning.mdx'
+
+# Deploying Sites
+
+<APIWarning/>
+
+There are two main supported workflows for deploying sites to
+Distributed Press.
+
+1. [Sutty](/deployment/sutty)
+2. [GitHub Actions](/deployment/github-actions) 
+
+## Sutty
+Sutty provides a content management system (CMS) that allows
+users to build and manage the content of their site without 
+needing to know how to code it from scratch. The CMS provides 
+pre-made themes and templates that makes it easy to
+get your site online.
+
+We've partnered with Sutty to also provide a toggle to enable
+users to deploy their sites to the distributed web easily.
+
+This is the recommended path for non-technical publishers, artists,
+and writers looking to get started with putting content on the distributed
+web.
+
+## GitHub Actions
+If you already deploy your site to GitHub pages or any other 
+static site hosting service like Vercel, Netlify, etc. then
+the GitHub action will allow you to also deploy to the 
+Distributed Web by adding just a few additional lines of configuration
+to your code repository.
+
+This is the recommended path for those with technical experience and
+know their way around GitHub and deployments.

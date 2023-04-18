@@ -11,7 +11,7 @@ export default {
     defaultTheme: 'light'
   },
   sidebar: {
-    defaultMenuCollapseLevel: 1,
+    defaultMenuCollapseLevel: 2,
   },
   footer: {
     text: <div>
