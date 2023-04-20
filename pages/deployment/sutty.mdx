@@ -10,33 +10,33 @@ You will then get an email titled "Confirmation instructions" sent to you from `
 
 ![Welcome screen with notification to confirm your account at the top.](/img/sutty/welcome.png)
 
-## Step 2: Site creation
+## Step 2: Create a site
 
 To create a new site, navigate to https://panel.sutty.nl/sites/new after logging in.
 
 ![Text inputs for the name, title, and description. All set to "tutorial"](/img/sutty/create-site.png)
 
-The most important step is to choose a unique name for your site. For this tutorial we will assume the name `tutorial`. This will be used for your website [domain](https://en.wikipedia.org/wiki/Domain_Name_System). For example, our site will be navigateable under https://tutorial.sutty.nl 
+The most important step is to choose a unique name for your site. For this tutorial we will assume the name `tutorial`. This will be used for your website [domain](https://en.wikipedia.org/wiki/Domain_Name_System). For example, our site will be navigable under "https://tutorial.sutty.nl". 
 
-Fill in a title and some sort of description for what your site will contain. For example "My personal Blog".
+Fill in a title for your website and a description for what your site will contain. For example, "My personal Blog".
 
 For the `Design` section, select the `Minima` theme which is [one of the default themes from Jekyll](https://jekyll.github.io/minima/).
 
 ![Grid of options for site templates. At the top are Minima and Sutty which are recommended.](/img/sutty/design.png)
 
-Afterwards, choose a License for your content. If you are unsure about which one to choose, the `CC BY-SA 4.0` is the one which has the most restrictions on what others can do with your content.
+Afterwards, choose a license for your content. If you are unsure about which one to choose, the [`CC BY-SA 4.0` (Creative Commons Attribution-ShareAlike 4.0 International)](https://creativecommons.org/licenses/by-sa/4.0/) is the one which has the most restrictions on what others can do with your website content.
 
 ![List of licenses with details on what they mean. Peer Production, Creative Comons Attribution, and Creative Commons Attribution Share Alike are visible.](/img/sutty/license.png)
 
 Once you're done, click the `Create site` button.
 
-After creation, you will see a notification bubble in the left panel that will tell you your site is building. This will be up while Sutty is doing the initial compliation and publishing of your site, and you don't need to wait for it to finish before making your first post. The bubble itself won't update automatically and you will need to refresh the page periodically or wait for an email to know when the publication has finished.
+After site creation, you will see a notification bubble in the left panel that will tell you your site is building. This will be up while Sutty is doing the initial compilation and publishing of your site. You do not need to wait for it to finish before making your first post. The bubble itself will not update automatically and you will need to refresh the page periodically, or wait for an email to know when the publication has finished.
 
 ![View of site information with post types on the left, default posts in the middle, and a notification saying the site is building](/img/sutty/posts-initial.png)
 
-## Step 3: Enable Distributed Press
+## Step 3: Enable Distributed.Press
 
-Before adding your first post, you should enable the Distributed Press integration in the Configuration page which you can get to by pressing the "Configuration" button on the left panel.
+Before adding your first post, you should enable the Distributed.Press integration in the Configuration page which you can get to by pressing the "Configuration" button on the left panel.
 
 You will be redirected to a URL that looks like this: `https://panel.sutty.nl/sites/{your site name here}/edit`.
 
@@ -44,27 +44,27 @@ From there, scroll down to the section that says `Publish to the distributed Web
 
 ![Toggle box with "Publish to Distributed" press beside it and additional information on what that means.](/img/sutty/enable-publish.png)
 
-Click the chekbox to turn it on, then navigate to the bottom of the page and hit "Save changes".
+Click the checkbox to turn it on, then navigate to the bottom of the page and hit "Save changes".
 
-This will then navigate you back to your posts list while it enables Distributed Press behind the scenes.
+This will then navigate you back to your posts list while it enables Distributed.Press behind the scenes.
 
-## Step 4: Your first post
+## Step 4: Publish your first post
 
 Once your site is created, you will be automatically redirected to your site's list of posts. The URL should look something like this: `https://panel.sutty.nl/sites/{your site name here}/en/posts`
 
-The minima template comes with some default posts for the site's privacy policy, the code of conduct, and information about the license you used.
+The Minima template comes with some default posts for the site's privacy policy, the code of conduct, and information about the license you used.
 
-You can see the types of posts you can add and edit in the "Post Types" section on the left side of the page.
+You can see all the types of posts of your site, and add and edit them in the "Post Types" section on the left side of the page.
 
 Click the "Add" button beside the "Post" type to start creating a new post for your site.
 
-![List of post types including "About", "Licence", and "Post"](/img/sutty/post-types.png)
+![List of post types including "About", "License", and "Post"](/img/sutty/post-types.png)
 
 ![New post page with sections for the title, description, and post content](/img/sutty/new-post.png)
 
-Add a title for your post, this will be shown on the main page of your site.
+Add a title for your post -- this will be shown on the main page of your site.
 
-From there you can add a description and optionally attach an image to the top of your post. We'll skip the image part for this tutorial.
+From there, you can add a description and optionally attach an image to the top of your post. We'll skip the image part for this tutorial.
 
 The main content of the post will be in the "Post content" section. Sutty has a built-in [Rich Text Editor](https://en.wikipedia.org/wiki/Online_rich-text_editor) for posts which enables you to format your post into headers, paragraphs, quotes, lists, and inline formatting options like bold text and underlines.
 
@@ -76,15 +76,15 @@ After hitting "Save" you will be taken to a page that will show you metadata abo
 
 ![Metadata bout the post like the creation date and title](/img/sutty/post-meta.png)
 
-Note that this will not be reflected on the site itself until you publish your changes.
+**Note that your new post will not be reflected on the site itself until you publish your changes.**
 
-To do so, you can click on your site name in the "Breadcrumbs" navigation at the top of the page to navigate back to your posts page.
+To publish your new post, click on your site name in the "Breadcrumbs" navigation at the top of the page to navigate back to your posts page.
 
 ![List of posts, the new "Hello" post is now at the top](/img/sutty/post-list.png)
 
-Click on "Publish all changes" in order to start a new build of the site. This can take a few minutes to complete, so try refreshing the page after around 3 minutes, or wait to get an email from sutty saying that the publishing was successful.
+Click on "Publish all changes" in order to start a new build of the site. This can take a few minutes to complete, so try refreshing the page after around 3 minutes, or wait until you get an email from Sutty saying that the publishing was successful.
 
-From there you will be able to navigate to the build stats page at `https://panel.sutty.nl/sites/{your site name}/build_stats` to see your list of p2p URLs
+From there, you will be able to navigate to the build statistics page at `https://panel.sutty.nl/sites/{your site name}/build_stats` to see your list of P2P URLs
 
 ![List of links for the site like https://tutorial.sutty.nl and ipns://tutorial.sutty.nl](/img/sutty/links-final.png)
 
@@ -92,10 +92,12 @@ You can visit your site by using either the HTTP URL: `https://{your site name}.
 
 ![Site homepage with the new "Hello" post at the top](/img/sutty/site-final.png)
 
-After navigating to one of the URLs you can click on your new post to view it's content.
+After navigating to one of the URLs, you can click on your new post to view its content.
 
 ![Post with the title and contents from the post creation form filled in](/img/sutty/post-final.png)
 
 ## Conclusion
 
-This should give you the gist of how to use the CMS. From here you can add more posts, experiment with modifying other parts of the theme, and with the formatting options in Sutty's rich text editor. If you'd like help with the panel, or want to create a custom theme, feel free to reach out to [Sutty](https://sutty.nl/en/index.html#contact) directly.
+This should give you the gist of how to use the CMS. From here you can add more posts, experiment with modifying other parts of the theme, and try out other formatting options in Sutty's rich text editor. If you'd like help with the panel, or want to create a custom theme, feel free to reach out to [Sutty](https://sutty.nl/en/index.html#contact) directly.
+
+Thank you for trying it out!
