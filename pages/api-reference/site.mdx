@@ -23,6 +23,7 @@ Manages a site's static files and configuration (which protocols to seed to, dom
     type ResultPayload = {
       "id": string,
       "domain": string,
+      "public": boolean,
       "protocols": {
         "http": boolean,
         "hyper": boolean,
@@ -70,6 +71,7 @@ Manages a site's static files and configuration (which protocols to seed to, dom
     ```typescript
     type InputPayload = {
       "domain": string,
+      "public": boolean | undefined, // defaults to `false`
       "protocols": {
         "http": boolean,
         "hyper": boolean,
@@ -88,6 +90,7 @@ Manages a site's static files and configuration (which protocols to seed to, dom
     type ResultPayload = {
       "id": string,
       "domain": string,
+      "public": boolean,
       "protocols": {
         "http": boolean,
         "hyper": boolean,
@@ -148,13 +151,14 @@ Manages a site's static files and configuration (which protocols to seed to, dom
     which protocols to seed to. 
 
     ```typescript
-    type InputPayload = {
+    type InputPayload = Partial<{
       "protocols": {
         "http": boolean,
         "hyper": boolean,
         "ipfs": boolean
-      }
-    }
+      },
+      "public": boolean
+    }>
     ```
   </Tab>
   <Tab>
@@ -182,5 +186,22 @@ Manages a site's static files and configuration (which protocols to seed to, dom
   - `401`: If the associated JWT token is invalid or does not have the appropriate privileges (i.e. did not create the site or is not an admin)
   - `400`: Tarball is too large (limit `5GB`)
   - `500`: Other internal error
+  </Tab>
+</Tabs>
+
+## Listing all sites 
+<RouteDescription httpVerb="GET" path="/v1/sites"/>
+<AccessList adminAccess />
+
+Only available if `useWebringDirectoryListing` is set to `true` on startup.
+
+<Tabs items={['Success Payload', 'Errors']}>
+  <Tab>
+    ```typescript
+    type ResultPayload = string[] // ID of all publishers
+    ```
+  </Tab>
+  <Tab>
+  - `401`: If the associated JWT token is invalid or does not have the appropriate privileges
   </Tab>
 </Tabs>
