@@ -76,3 +76,17 @@ A publisher can only be edited by that publisher or an admin account
   </Tab>
 </Tabs>
 
+## Listing all publishers 
+<RouteDescription httpVerb="GET" path="/v1/publisher"/>
+
+Note that the result payload changes depending on whether the request was made by
+an admin or not (i.e. a publisher or regular, un-authenticated request). Admin requests 
+return a list of all sites. All other requests only return a list of sites that have `public` set to `true`.
+
+<Tabs items={['Success Payload']}>
+  <Tab>
+    ```typescript
+    type ResultPayload = string[] // ID of sites
+    ```
+  </Tab>
+</Tabs>
