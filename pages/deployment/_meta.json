@@ -1,3 +1,6 @@
 {
-  "index": "How to deploy a site"
+  "index": "How to deploy a site",
+  "github-actions": "GitHub Actions",
+  "sutty": "Sutty CMS",
+  "custom-domain": "Setting up a Custom Domain"
 }

@@ -1,29 +1,111 @@
 # Technical Overview
+## What happens when you publish a site to Distributed Press?
+When you [upload content to a site](./api-reference/site#uploading-content-to-a-site) on Distributed Press, the server first 
+untars the files to a temporary folder on the server.
 
-Distributed Press has many components that work together.
+Then, the server looks up the associated configuration for the site. It figures out what 
+protocols the user has indicated interest in publishing to and then kicks off sync tasks
+for the enabled protocols.
 
-## API Server
-The API server is how clients interface with Distributed Press. 
+### IPFS
+For IPFS, the associated logic is [in this file](https://github.com/hyphacoop/api.distributed.press/blob/main/protocols/ipfs.ts).
+The main things you need to know is that Distributed Press keeps a long-running [Kubo](https://www.npmjs.com/package/go-ipfs)
+instance that is spun-up when Distributed Press starts up. This connection is managed by `js-ipfsd-ctl`.
 
-Clients make authenticated HTTP requests to make updates to resources 
-like publishers, admins, and sites.
+We then copy the files to an IPFS [Mutable File System (MFS)](https://docs.ipfs.tech/concepts/file-systems/) and 
+publish it to IPFS. When finished, this returns us a CID. We update the IPNS entry for the site ID to this resulting CID.
 
-The API server is responsible for locally storing site data to serve and 
-seed over the various [peer-to-peer protocols](./protocols) that Distributed Press supports.
+This CID and accompanying IPNS entry is used to populate the `links` section:
 
-See the [API reference](./api-reference/) for more details.
+```typescript
+type IPFSLinks = {
+  "gateway": string,
+  "cid": string,
+  "pubKey": string,
+  "dnslink": string,
+  "enabled": boolean,
+  "link": string 
+}
+```
+
+### Holepunch
+The associated logic for Holepunch is [in this file](https://github.com/hyphacoop/api.distributed.press/blob/main/protocols/hyper.ts).
+Holepunch similarly uses [`localdrive`](https://www.npmjs.com/package/localdrive) which overs a mutable file system API that is similar to Hyperdrive.
+
+We create a drive for each site and then copy the files into it. This is done through `localdrive` as it has a feature to
+mirror files from your filesystem to the drive.
+
+When finished, we get the drive URL and similarly populate the `links` section:
+
+```typescript
+type HyperLinks = {
+  "gateway": string,
+  "raw": string,
+  "dnslink": string,
+  "enabled": boolean,
+  "link": string 
+}
+```
+
+### Wrapping up
+We block the async function from returning until all protocols finish publishing. Due to some optimizations
+we've done on both the IPFS and Holepunch sides, this process usually takes less than 5 seconds for the average site.
+
+## What happens when you view a site?
+### Over a Gateway
+The user visits `docs.distributed.press` in their browser.
+
+Their browser queries DNS for where to find the actual content for this domain.
+
+```bash
+❯ dig docs.distributed.press A
+
+;; ANSWER SECTION:
+docs.distributed.press.                       600   IN	CNAME   docs-distributed-press.ipns.ipfs.hypha.coop.
+docs-distributed-press.ipns.ipfs.hypha.coop.  300   IN  CNAME   ipfs.prod.hypha.coop.
+ipfs.prod.hypha.coop.                         300   IN  A       104.245.147.222
+```
+
+Then, the browser makes a request to that last IP address `104.245.147.222`. The gateway
+handles this request and notices that it is requesting the [IPNS service using the DNSLink resolution style](https://docs.ipfs.tech/concepts/ipfs-gateway/#gateway-services).
+
+The gateway makes another query to DNS to figure out what the associated CID is for the domain using [DNSLink](https://dnslink.dev/).
+
+```bash
+❯ dig _dnslink.docs.distributed.press TXT       
+
+;; ANSWER SECTION:
+_dnslink.docs.distributed.press. 49 IN	TXT	"dnslink=/ipns/k51qzi5uqu5dicruj8whyde1z5vtm2tg6q1gey17nb2trkuh4b0m69sl6z85cw/"
+_dnslink.docs.distributed.press. 49 IN	TXT	"dnslink=/hyper/smqq19f3gbbz7sn9zko589az9x8ip4ky5g4nce5rnzgywfi13qso/"
+```
+
+The node gets this response and looks up the associated CID for the appropriate protocol (IPFS in this case).
+If it has this CID, it will respond with the content directly. If it doesn't, it attempts to retrieve it from the network and respond with the content.
 
 
-## DNS
-The DNS server runs alongside the Distributed Press API and is responsible
-for resolving DNS queries for sites that it hosts.
+### Over NGINX
+The user visits `docs.distributed.press` in their browser.
 
-This means that if you own the domain for the site you host (e.g. `distributed.press`),
-you can add an `NS` record through your domain registrar to tell it to look at
-Distributed Press for where to find where the site is actually hosted.
+Their browser queries DNS for where to find the actual content for this domain.
 
-Then, the Distributed Press DNS server will respond with a `_dnslink` TXT
-record that will detail an appropriate HTTP gateway to reach that site from.
+```bash
+❯ dig docs.distributed.press
 
-This means that *anyone* can access a site published using Distributed Press 
-using a normal browser.
+;; QUESTION SECTION:
+;docs.distributed.press.      IN	A
+
+;; ANSWER SECTION:
+docs.distributed.press. 600   IN	CNAME   api.distributed.press.
+api.distributed.press.  3600  IN	A       198.50.215.13
+```
+
+The browser visits `198.50.215.13` and NGINX serves the files directly back to the browser.
+
+### Using a distributed-web-friendly browser
+The user visits `docs.distributed.press` in their browser.
+
+Browsers like Brave and Opera run their own IPFS and/or Holepunch nodes locally and thus will first try finding the content via these nodes before reaching out over regular HTTP.
+The browser tells the node to make a query to DNS to figure out what the associated CID is for the domain using [DNSLink](https://dnslink.dev/).
+
+What the browser does here is pretty much identical to the [gateway steps detailed above](#over-a-gateway).
+

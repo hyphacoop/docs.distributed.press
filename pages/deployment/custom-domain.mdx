@@ -1,0 +1,35 @@
+import { Callout } from 'nextra-theme-docs'
+
+## Default availability 
+
+By default, Distributed Press will make your site available by seeding it to one of the [supported protocols](../protocols) after [uploading content](../api-reference/site#uploading-content-to-a-site).
+
+There are then two ways to view this content *directly* through these protocols:
+1. A distributed-web-friendly browser like Opera or Brave can visit the provided `links.ipfs.link` or `links.hyper.link`. These look like `hyper://docs.distributed.press` or `ipns://docs.distributed.press`.
+   These browsers perform a `_dnslink` lookup to figure out what that friendly name *actually* points to content-wise on the protocol and then displays that to the user.
+2. Any web browser can visit IPFS or Holepunch [Gateway](https://docs.ipfs.tech/concepts/ipfs-gateway/) to view the site over regular HTTP. By default, Distributed Press provides links to the gateway URL 
+   under `links.hyper.gateway` and `links.ipfs.gateway`. These domains default to [Hypha](https://hypha.coop/)'s IPFS and Holepunch gateways. If you self-host Distributed Press, you can manually change these gateway URLs in the code to publicly accessible ones or even your own self-hosted gateway.
+
+You can optionally enable serving over regular HTTP via NGINX (like a normal web server) by either 
+1. adding the site ID to `distribute_press_served_sites` in `ansible/inventory.yml` and re-executing the Ansible Playbook (if you are [self-hosting Distributed Press](../self-hosting))
+2. or contacting the admin of your Distributed Press instance to do the above step for you
+
+<Callout type="warning">
+We recommend *against* relying on *solely* serving sites over HTTP. Hosting over our other [supported protocols](../protocols)
+means that even if the Distributed Press instance you use goes down for whatever reason, you can *still* access your 
+content if at least one other person has a copy of the site and is hosting it.
+</Callout>
+
+## Custom Domain
+If you'd like your Distributed Site to be available via HTTP at your own custom domain (e.g. like how this site is available over `docs.distributed.press`),
+you can do that in one of two ways:
+
+### Using a Gateway
+If you'd like to serve content from a particular gateway, you can create a `CNAME` record with your domain registrar that points at the subdomain of the gateway.
+If the gateway we chose was Hypha's Holepunch gateway (`hyper.hypha.coop`), the CNAME record for this site would look like `CNAME docs.distributed.press. docs-distributed-press.hyper.hypha.coop.`
+
+Note that we escape any `.` in the domain with `-` and any `-` with `--`. Additionally, any gateway you choose should support [subdomain gateway resolution](https://docs.ipfs.tech/how-to/gateway-best-practices/#use-subdomain-gateway-resolution-for-origin-isolation) this to work properly.
+
+### Using NGINX
+If you have serving over HTTP enabled for your site (see above for more details), you can create a `CNAME` record that points at the Distributed Press instance. For instance,
+the CNAME record for this site would look like `CNAME docs.distributed.press. api.distributed.press.`
