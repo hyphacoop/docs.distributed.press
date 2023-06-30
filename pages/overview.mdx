@@ -30,7 +30,7 @@ type IPFSLinks = {
 
 ### Holepunch
 The associated logic for Holepunch is [in this file](https://github.com/hyphacoop/api.distributed.press/blob/main/protocols/hyper.ts).
-Holepunch similarly uses [`localdrive`](https://www.npmjs.com/package/localdrive) which overs a mutable file system API that is similar to Hyperdrive.
+Holepunch similarly uses [`localdrive`](https://www.npmjs.com/package/localdrive) which offers a mutable file system API that is similar to Hyperdrive.
 
 We create a drive for each site and then copy the files into it. This is done through `localdrive` as it has a feature to
 mirror files from your filesystem to the drive.
