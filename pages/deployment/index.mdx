@@ -34,3 +34,17 @@ to your code repository.
 
 This is the recommended path for those with technical experience and
 know their way around GitHub and deployments.
+
+
+## Hosted Domains
+To publish on the traditional (HTTP-based) web, you will also need to create a subdomain 
+(or domain) for use with your distributed press site, 
+then create a [**NS record**](https://www.notion.so/b25e574dc79d4c9ba9876a4bb574f41e?pvs=21) 
+for `_dnslink.distpress`  that points to the API of your Distributed Press instance.
+This record allows you to tell anyone trying to access that site to look to the 
+distributed press DNS server to locate the website for this file. Distributed press hosts a [**DNSLink gateway**](https://developers.cloudflare.com/web3/ipfs-gateway/concepts/dnslink/) that allows you to access content hosted on a distributed system like IPFS or Hypercore from the HTTP-based traditional internet.
+
+<img src="/img/ns-record.png"/>
+*This NS record is set to `_dnslink_distpress.walkerweb.me` and it points to `api.distributed.press.` as the gateway.*
+
+This URL should be added in the Github Action `site_url: <Your URL or Subdomain>`.
