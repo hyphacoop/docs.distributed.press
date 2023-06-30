@@ -1,2 +1,5 @@
 .next
 out
+package-lock.json
+/node-modules
+**/node-modules
