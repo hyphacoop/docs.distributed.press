@@ -4,10 +4,16 @@ import APIWarning from '../../components/ApiWarning.mdx'
 # Deploying with Github Actions
 <APIWarning/>
 
+[This Github action](https://github.com/marketplace/actions/publish-to-distributed-press) will tar your site together into a single file and use the Distributed Press API to create and make updates to the content published on your web server every time it is triggered. This particular project is triggered when you push to the `main` branch of the Github Repo the Github Action is created in.
+
+In order to get access to use the resources provided by Distributed Press, you will 
+need to get an API Key from whomever is hosting the instance that allows you 
+(or in this case, Github Actions) to create and make changes to a site. 
+
 If you are used to deploying to GitHub pages or any other hosting provider
 that uses GitHub actions, `actions-distributed-press` allows you to 
 just add a single step to your actions workflow to also deploy a bundle 
-of static files to Distributed Press.
+of static files to Distributed Press. 
 
 <Callout type="info">
 Distributed Press only supports deploying a folder of static files.
@@ -15,7 +21,7 @@ Most frameworks like Next.js, React, and Hugo, allow you to 'export'
 or 'build' your site as bunch of static files.
 </Callout>
 
-[Read the source here](https://github.com/hyphacoop/actions-distributed-press/tree/main/src
+[See the source Github Action here](https://github.com/hyphacoop/actions-distributed-press/tree/main/src
 )
 
 To your existing action workflow, add a step to publish to Distributed Press. Additionally,
@@ -76,3 +82,15 @@ jobs:
 
 This will build and publish your site to the Distributed Press
 instance hosted at `https://your-hosted.dp.instance`
+
+The  `with`: section of the Github Action has a some fields which are 
+required, such as `refresh_token` and `site_url` 
+(if you are hosting an HTTP site), since they are unique to your site. 
+The other fields that you want to specify can be also be added to your 
+Github action to customize your site deployment. 
+
+Each of the `deploy_http:`,  `deploy_hyper:`, and `deploy_ipfs:` can be true or false, 
+depending on whether you want the website to be deployed via that protocol. 
+The `refresh_token` should contain a Github secret that you set up earlier, 
+and the `site_url` field should contain the subdomain you set up to host your website. 
+
