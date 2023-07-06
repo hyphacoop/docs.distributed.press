@@ -15,7 +15,7 @@ instance that is spun-up when Distributed Press starts up. This connection is ma
 We then copy the files to an IPFS [Mutable File System (MFS)](https://docs.ipfs.tech/concepts/file-systems/) and 
 publish it to IPFS. When finished, this returns us a CID. We update the IPNS entry for the site ID to this resulting CID.
 
-This CID and accompanying IPNS entry is used to populate the `links` section:
+This CID and accompanying IPNS entry is used to populate [the `links` section](https://docs.distributed.press/api-reference/site#getting-the-information-of-site):
 
 ```typescript
 type IPFSLinks = {
