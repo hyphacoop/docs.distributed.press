@@ -9,7 +9,7 @@ Manages a site's static files and configuration (which protocols to seed to, dom
 
 <AuthedEndpoint/>
 
-## Getting the information of site
+## Getting the information of a site
 <RouteDescription httpVerb="GET" path="/v1/sites/:domain"/>
 <AccessList ownerAccess adminAccess />
 
@@ -81,8 +81,8 @@ Manages a site's static files and configuration (which protocols to seed to, dom
     ```
     <Callout type="warning">
     Note that this does
-    *not* include the actual site content itself. See the endpoint for
-    uploading content to do that.
+    *not* include the actual site content itself. See the [endpoint for
+    uploading content](#uploading-content-to-a-site) to do that.
     </Callout>
   </Tab>
   <Tab>
@@ -178,7 +178,7 @@ Manages a site's static files and configuration (which protocols to seed to, dom
     Takes a single path parameter `domain` and uploads the attached tarball as the site content.
 
     The body must be of type `multipart/form-data` with a single `tar.gz` file which will get extracted out and served. 
-    Using the `PUT` endpoing will delete any existing files before uploading the new files.
+    Using the `PUT` endpoint will delete any existing files before uploading the new files.
     `PATCH` on the other hand, will only upload new files in the tarball.
   </Tab>
   <Tab>

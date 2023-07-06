@@ -41,8 +41,6 @@ all:
    # execute the Ansible playbook with user defined variables
    $ ansible-playbook distributed_press.yml -i inventory.yml
    ```
-4. After you deploy your server you will need to add `_dnslink` records to your DP instance via `NS` records. 
-   e.g. `NS _dnslink.example.com example.com`
 
 ## Debugging
 1. Check the status of the service: `systemctl status distributed.press`
