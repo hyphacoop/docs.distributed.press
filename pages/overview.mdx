@@ -28,6 +28,9 @@ type IPFSLinks = {
 }
 ```
 
+Normally, this information is provided after you publish changes to a site. If you use the [GitHub action](./deployment/github-actions.mdx),
+this is printed to the console in the Action run under the "Publish to Distributed Press" step.
+
 ### Holepunch
 The associated logic for Holepunch is [in this file](https://github.com/hyphacoop/api.distributed.press/blob/main/protocols/hyper.ts).
 Holepunch similarly uses [`localdrive`](https://www.npmjs.com/package/localdrive) which offers a mutable file system API that is similar to Hyperdrive.

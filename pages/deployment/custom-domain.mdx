@@ -30,6 +30,10 @@ If the gateway we chose was Hypha's Holepunch gateway (`hyper.hypha.coop`), the 
 
 Note that we escape any `.` in the domain with `-` and any `-` with `--`. Additionally, any gateway you choose should support [subdomain gateway resolution](https://docs.ipfs.tech/how-to/gateway-best-practices/#use-subdomain-gateway-resolution-for-origin-isolation) this to work properly.
 
+<Callout type="warning">
+Due to how SSL certificates work for domains, currently this method does not work for `https`.
+</Callout>
+
 ### Using NGINX
 If you have serving over HTTP enabled for your site (see above for more details), you can create a `CNAME` record that points at the Distributed Press instance. For instance,
 the CNAME record for this site would look like `CNAME docs.distributed.press. api.distributed.press.`
