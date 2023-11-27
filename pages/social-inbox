@@ -1,0 +1,7 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Social Inbox
+
+<Callout type="info">
+</Callout>
+
