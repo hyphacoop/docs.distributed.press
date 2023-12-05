@@ -10,6 +10,10 @@ to allow Distributed Press to work properly.
 
 Please ensure you have both Python 3 and Ansible installed before proceeding with the setup steps.
 
+The deployment scripts work best on Debian 11 but should also work on Ubuntu 22.
+
+If you don't have a machine set up or aren't sure where to get started we recommend using a [Digital Ocean Droplet](https://www.digitalocean.com/pricing/droplets) with at least 4GB of ram (though 8 GH can help if you have a lot of IPFS traffic).
+
 ## Steps
 
 1. Edit `inventory.yml` to specify your own domain to run the scripts on as well as any variables you wish to set.
@@ -36,12 +40,103 @@ all:
    ```bash
    $ ansible-galaxy install -r ./requirements.yml
    ```
+
 3. Execute the playbook
+
    ```bash
    # execute the Ansible playbook with user defined variables
    $ ansible-playbook distributed_press.yml -i inventory.yml
    ```
 
+4. Generate an "admin token"
+
+First, SSH into your instance with `ssh root@example.com`.
+
+Then run the following:
+
+   ```bash
+   # stop the service so we can update its database
+   sudo systemctl stop distributed.press.service
+
+   # switch to the "press" user
+   su press
+
+   # navigate to the distributed press codebase
+   cd ~/api.distributed.press
+
+   # Create a new admin account and get a token for them
+   npm run make-admin
+
+   # Copy the output of this command, this is what you'll need to make new publisher tokens
+
+   # switch back to `root` user
+   exit
+
+   # start up distributed press again
+   sudo systemctl start distributed.press.service
+   ```
+
+Make sure to save that token somewhere secure and secret like a password vault in your OS or a service like [Bitwarden](https://bitwarden.com/products/personal/).
+
+This will be used to create any new admins or publishers and do administrative tasks.
+
+5. Generate your first "publisher token"
+
+Now that we have your admin account, you can create a new "publisher" for making sites.
+
+Navigate to your Distributed Press instace and go to `/v1/docs` which will open up the Open-API interface to talk to your instance.
+
+From here click the `Authorize` button and enter your admin token from step 4.
+
+Next go to section titled `POST /publisher` and click "Try it out".
+
+Replace the text "string" with some sort of name or domain. e.g. if you're publisher is Hypha, you can use `hypha.coop` for their name.
+
+Then hit `Execute` to create the publisher.
+
+Copy the `id` field from the response and place it in the `issuedTo` field in the `POST /v1/auth/exchange` API.
+Make sure to remove `admin` from the set of capabilities.
+
+Hit `Execute` and send the resulting token to your publisher to use in either API calls or in the [Distributed Press Github Action](/deployment/github-actions). 
+
+## Steps - Social Inbox
+
+If you're interested in publishing your site on the [Fediverse](https://en.wikipedia.org/wiki/Fediverse), you can also self host your own instance of the Distributed Press [Social Inbox](/social-inbox).
+
+1. Go through steps 1 & 2 for the Distributed Press API
+
+2. Modify the `vars` section of your `inventory.yml` to enable the inbox. You *MUST* supply a new domain for the `social_inbox_domain` field for the domain the inbox will be hosted on..
+
+```yaml filename="inventory.yml" {4-5}
+all:
+  # Set custom variables here, like custom ports for listening
+  vars:
+    distributed_press_domain: "example.com"
+    distributed_press_letsencrypt_email: "example@example.com"
+    distributed_press_served_sites: []
+    social_inbox_enabled: true
+    social_inbox_domain: "social.example.com"
+  children:
+    distributed_press:
+      hosts:
+        example.com:
+          ansible_user: root
+```
+
+3. Run the playbook to deploy
+
+
+   ```bash
+   # execute the Ansible playbook with user defined variables
+   $ ansible-playbook distributed_press.yml -i inventory.yml
+   ```
+
+From here you can make use of the [Jekyll Plugin](https://0xacab.org/sutty/jekyll/jekyll-activity-pub) or use the social inbox APIs directly from your code.
+
 ## Debugging
+
+After SSHing into your VM you can use these commands to get you started:
+
 1. Check the status of the service: `systemctl status distributed.press`
 2. Follow the logs of the service: `journalctl -fu distributed.press`
+3. `sudo su press` switch to the distributed.press "user" and `cd ~` to tinker with the data and source code manually.
