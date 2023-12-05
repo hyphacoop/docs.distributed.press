@@ -84,13 +84,13 @@ This will be used to create any new admins or publishers and do administrative t
 
 Now that we have your admin account, you can create a new "publisher" for making sites.
 
-Navigate to your Distributed Press instace and go to `/v1/docs` which will open up the Open-API interface to talk to your instance.
+Navigate to your Distributed Press instance and go to `/v1/docs` which will open up the Open-API interface to talk to your instance.
 
 From here click the `Authorize` button and enter your admin token from step 4.
 
 Next go to section titled `POST /publisher` and click "Try it out".
 
-Replace the text "string" with some sort of name or domain. e.g. if you're publisher is Hypha, you can use `hypha.coop` for their name.
+Replace the text "string" with some sort of name or domain. e.g. if your publisher is Hypha, you can use `hypha.coop` for their name.
 
 Then hit `Execute` to create the publisher.
 
@@ -105,7 +105,7 @@ If you're interested in publishing your site on the [Fediverse](https://en.wikip
 
 1. Go through steps 1 & 2 for the Distributed Press API
 
-2. Modify the `vars` section of your `inventory.yml` to enable the inbox. You *MUST* supply a new domain for the `social_inbox_domain` field for the domain the inbox will be hosted on..
+2. Modify the `vars` section of your `inventory.yml` to enable the inbox. You *MUST* supply a new domain for the `social_inbox_domain` field for the domain the inbox will be hosted on.
 
 ```yaml filename="inventory.yml" {4-5}
 all:
