@@ -1,0 +1,22 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Social Reader
+
+The **Social Reader** is a P2P and offline ActivityPub client for reading and following microblogs on the [Fediverse](https://www.fediverse.to/). It stands out by not indexing data on a server but instead empowering users to load public ActivityPub data directly onto their devices, turning each device into a personal indexer. This approach ensures that you control your content fully.
+
+## Key Features
+- **Direct Content Loading:** Load public ActivityPub data directly without server indexing.
+- **P2P Support:** Natively supports content loading over P2P protocols like [ipfs://](https://ipfs.tech/) and [hyper://](https://holepunch.to/), allowing access anytime, anywhere—even offline.
+- **Low-Tech Philosophy:** Built with minimal dependencies using vanilla JavaScript, unminified scripts, and local storage via IndexedDB.
+
+## Why Social Reader?
+Social Reader removes the middleman from digital interactions, facilitating direct communication with audiences without third-party interference or algorithms. This ad-free experience prioritizes user autonomy, making Social Reader ideal for community leaders and organizations who value genuine engagement.
+
+## FAQs
+### How do I create an account on Social Reader?
+- Social Reader is designed as a reading and following client, which means you cannot create an account directly within the app. To actively write and contribute to the Fediverse, you would need to interact with the [Social Inbox](https://hypha.coop/dripline/announcing-dp-social-inbox/) API. This can be done through platforms like [Sutty CMS](https://sutty.nl/) or by forking and hosting your own instance of [Staticpub](https://github.com/RangerMauve/staticpub.mauve.moe) repository. If you're a community or organization that would like to combine the two for your use case, send us an email.
+
+### Why is Social Reader different from mainstream social platforms?
+- Social Reader ensures direct communication with your audience, free from ads and third-party algorithms. This setup not only fosters genuine interaction but also allows organizations and community leaders to engage their followers without the need to pay for reach, a common requirement on traditional social networks. It is also an area for us to experiment with new ways of loading content from the distributed web without needing to depend on a particular Fediverse server implementation.
+
+View and contribute to our open-source code on [GitHub](https://github.com/hyphacoop/reader.distributed.press).
