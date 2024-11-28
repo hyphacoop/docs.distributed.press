@@ -7,6 +7,7 @@
   "self-hosting": "Self-hosting Distributed Press",
   "social-inbox": "Social Inbox",
   "social-reader": "Social Reader",
+  "dp-cli": "Distributed Press CLI",
   "deployment": "Deploying sites",
   "docs": "How to update documentation"
 }

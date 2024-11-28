@@ -1,0 +1,192 @@
+## Send Posts
+
+### Use Staticpub Template
+1. Fork the Repository:
+Visit the [staticpub.distributed.press](https://github.com/hyphacoop/staticpub.distributed.press) repository on GitHub and click the "[Fork](https://github.com/hyphacoop/staticpub.distributed.press/fork)" button to create your own copy.
+
+2. Clone Your Fork:
+
+```bash
+git clone https://github.com/hyphacoop/staticpub.distributed.press.git
+cd staticpub.distributed.press
+```
+
+3. Replace Domain, Username, and Name:
+
+### For Linux Users:
+
+```bash
+find . -type f -exec sed -i 's/staticpub\.mauve\.moe/yourdomain\.com/g; s/mauve/username/g; s/"Mauve"/"Your Name"/g' {} +
+```
+
+### For macOS Users:
+
+```bash
+find . -type f -exec sed -i '' 's/staticpub\.mauve\.moe/yourdomain\.com/g; s/mauve/username/g; s/"Mauve"/"Your Name"/g' {} +
+```
+
+**This will replace:**
+- `staticpub.mauve.moe` → `yourdomain.com`
+- `mauve` → `yourusername`
+- `Mauve` → `Your Name`
+
+Make sure to update the `publicKeyPem` field in the following files with your actual public key from the `.dprc` configuration file:
+
+- `about.jsonld`
+- `about-ipns.jsonld`
+
+### How to Find Your Public Key:
+
+1. Open your `.dprc` file (generated during setup).
+2. Copy the value of `"publicKeyPem"` (including the `BEGIN` and `END` lines).
+3. Paste it into the `publicKeyPem` field in the JSON files mentioned above.
+
+### Example:
+
+```json
+    "publicKey": {
+      "@context": "https://w3id.org/security/v1",
+      "@type": "Key",
+      "id": "https://staticpub.mauve.moe/about.jsonld#main-key",
+      "owner": "https://staticpub.mauve.moe/about.jsonld",
+      "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nYOUR_PUBLIC_KEY_HERE\n-----END PUBLIC KEY-----\n"
+    }
+```
+
+Replace `YOUR_PUBLIC_KEY_HERE` with your actual public key from `.dprc`.
+
+For using the Social Inbox, you need to generate a keypair and register your ActivityPub actor.
+
+### Generate a Keypair
+
+Run the following command to generate a new RSA keypair:
+
+```bash
+dp-cli generate-keypair
+```
+
+**Purpose:**  
+This keypair is used for authenticating your interactions with the Social Inbox and the fediverse at large, ensuring secure communication and verifying your identity.
+
+**Note:**  
+If you only plan to use the DP API for static file publishing, generating a keypair might not be necessary. However, it's recommended for enhanced security and functionality when interacting with the Social Inbox.
+
+This will generate a keypair and save it to your `.dprc` configuration file.
+
+### Register Your Actor
+
+Register your ActivityPub actor with the Social Inbox:
+
+```bash
+dp-cli register-actor
+```
+
+This will register your actor with the Social Inbox and save the details to your configuration.
+
+### Publish the Staticpub Template
+
+Please follow the steps from this section:
+- [Publish Site With Distributed Press API](/sdk/publish-site.mdx)
+
+### Send a Post to Followers
+
+Published the template? Now, let's send a post to your followers:
+
+```bash
+dp-cli send-post ./path_to_activity.json
+```
+
+#### Example (as per the staticpub template):
+```bash
+dp-cli send-post ./posts/helloworld.jsonld
+```
+
+### Patch a Site
+After publishing your site and registering your actor, you might need to update your site with new content or activities. Use the `patch` command to add the note/activity JSON and update the outbox with the new activity.
+
+```bash
+dp-cli patch -i <site-id> ./path_to_patch_folder
+```
+
+## Configuration
+
+The CLI uses a configuration file named `.dprc` to store API URLs, authentication tokens, keypairs, and actor information. The configuration file follows the format expected by the [`rc` module](https://www.npmjs.com/package/rc), which loads configuration options in a flexible way.
+
+Your `.dprc` file should look like this:
+
+```json
+{
+  "dpApiUrl": "https://api.distributed.press/v1",
+  "socialInboxUrl": "https://social.distributed.press/v1",
+  "authToken": "<your-auth-token>",
+  "keypair": {
+    "publicKeyPem": "<your-public-key>",
+    "privateKeyPem": "<your-private-key>"
+  },
+  "domain": "<your-site-domain>",
+  "actorUsername": "<your-actor-username>",
+  "actorUrl": "<your-actor-url>",
+  "publicKeyId": "<your-public-key-id>"
+}
+```
+
+- **`dpApiUrl`:** The base URL for the Distributed Press API.
+- **`socialInboxUrl`:** The base URL for the Social Inbox.
+- **`authToken`:** Your authentication token for API access.
+- **`keypair`:** Your public and private keys for secure interactions.
+- **`domain`:** Your custom domain for the site, e.g., example.com.
+- **`actorUsername`:** Your ActivityPub actor username.
+- **`actorUrl`:** The URL of your actor.
+- **`publicKeyId`:** The ID of your public key.
+
+_Ensure that your `.dprc` file is **not** committed to version control to keep your credentials secure._
+
+## Commands
+### `generate-keypair`
+
+**Description:**  
+Generate a new RSA keypair and save it to your configuration.
+
+**Usage:**
+
+```bash
+dp-cli generate-keypair
+```
+
+### `register-actor`
+
+**Description:**  
+Register your ActivityPub actor with the Social Inbox.
+
+**Usage:**
+
+```bash
+dp-cli register-actor
+```
+
+**Prompts:**
+
+1. **Enter your actor username:**  
+   _(e.g., "@username@yourdomain.com")_
+
+2. **Enter your actor URL:**  
+   _(e.g., "https://yourdomain.com/actor")_
+
+3. **Enter your public key ID:**  
+   _(e.g., "https://yourdomain.com/actor#main-key")_
+
+### `send-post`
+
+Send an activity post to your followers and publish it on the DP site:
+
+```bash
+dp-cli send-post --path ./path_to_activity.json
+```
+
+**Output:**
+
+```
+Sending a post to followers...
+Post sent successfully!
+Response: { ... }
+```
