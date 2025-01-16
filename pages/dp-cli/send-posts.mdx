@@ -62,7 +62,7 @@ For using the Social Inbox, you need to generate a keypair and register your Act
 Run the following command to generate a new RSA keypair:
 
 ```bash
-dp-cli generate-keypair
+dpress generate-keypair
 ```
 
 **Purpose:**  
@@ -88,7 +88,7 @@ Alternatively, you can use the staticpub's [publish.yml](https://github.com/hyph
 Register your ActivityPub actor with the Social Inbox:
 
 ```bash
-dp-cli register-actor
+dpress register-actor
 ```
 
 This will register your actor with the Social Inbox and save the details to your configuration.
@@ -98,19 +98,19 @@ This will register your actor with the Social Inbox and save the details to your
 Published the template? Now, let's send a post to your followers:
 
 ```bash
-dp-cli send-post ./path_to_activity.json
+dpress send-post ./path_to_activity.json
 ```
 
 #### Example (as per the staticpub template):
 ```bash
-dp-cli send-post ./posts/helloworld.jsonld
+dpress send-post ./posts/helloworld.jsonld
 ```
 
 ### Patch a Site
 After publishing your site and registering your actor, you might need to update your site with new content or activities. Use the `patch` command to add the note/activity JSON and update the outbox with the new activity.
 
 ```bash
-dp-cli patch -i <site-id> ./path_to_patch_folder
+dpress patch -i <site-id> ./path_to_patch_folder
 ```
 
 ## Configuration
@@ -155,7 +155,7 @@ Generate a new RSA keypair and save it to your configuration.
 **Usage:**
 
 ```bash
-dp-cli generate-keypair
+dpress generate-keypair
 ```
 
 ### `register-actor`
@@ -166,7 +166,7 @@ Register your ActivityPub actor with the Social Inbox.
 **Usage:**
 
 ```bash
-dp-cli register-actor
+dpress register-actor
 ```
 
 **Prompts:**
@@ -185,7 +185,7 @@ dp-cli register-actor
 Send an activity post to your followers and publish it on the DP site:
 
 ```bash
-dp-cli send-post --path ./path_to_activity.json
+dpress send-post --path ./path_to_activity.json
 ```
 
 **Output:**

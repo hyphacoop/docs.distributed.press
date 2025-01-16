@@ -5,7 +5,7 @@
 Register a trial publisher account on Distributed Press using your email:
 
 ```bash
-dp-cli register
+dpress register
 ```
 
 You will be prompted for your name and email. Note: currently, only one site per email is allowed.
@@ -15,7 +15,7 @@ You will be prompted for your name and email. Note: currently, only one site per
 Obtain your `authToken` from your Distributed Press API administrator and set it using:
 
 ```bash
-dp-cli set-auth-token
+dpress set-auth-token
 ```
 
 You will be prompted to enter your authentication token.
@@ -25,7 +25,7 @@ You will be prompted to enter your authentication token.
 Once registered, create a new site by specifying the domain name and whether it should be public:
 
 ```bash
-dp-cli create-site
+dpress create-site
 ```
 
 ### Publish Your Site
@@ -33,7 +33,7 @@ dp-cli create-site
 To upload and publish static content to the DP site from a specified directory:
 
 ```bash
-dp-cli publish ./folder_here
+dpress publish ./folder_here
 ```
 
 ### DNS Setup
@@ -91,7 +91,7 @@ To use your custom domain, ensure that your domain has a valid HTTPS certificate
 Clone a website by creating a static copy from its HTTP URL:
 
 ```bash
-dp-cli clone <site-id>
+dpress clone <site-id>
 ```
 
 ## Configuration
@@ -127,7 +127,7 @@ Register a trial publisher account with Distributed Press:
 **Usage:**
 
 ```bash
-dp-cli register
+dpress register
 ```
 
 ### `set-auth-token`
@@ -138,7 +138,7 @@ Set your authentication token for API access.
 **Usage:**
 
 ```bash
-dp-cli set-auth-token
+dpress set-auth-token
 ```
 
 **Prompt:**
@@ -154,7 +154,7 @@ Create a new site by specifying the domain name and whether it should be public
 **Usage:**
 
 ```bash
-dp-cli create-site
+dpress create-site
 ```
 
 **Prompt:**
@@ -171,7 +171,7 @@ Upload and publish static content to the DP site from a specified directory:
 **Usage:**
 
 ```bash
-dp-cli publish ./folder_here
+dpress publish ./folder_here
 ```
 
 ### `clone`
@@ -183,5 +183,5 @@ Clone a website by creating a static copy from its HTTP URL:
 **Usage:**
 
 ```bash
-dp-cli clone <site-id>
+dpress clone <site-id>
 ```
