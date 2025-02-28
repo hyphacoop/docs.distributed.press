@@ -1,0 +1,41 @@
+# explore.distributed.press
+This project generates a website that lists all sites published through Distributed Press. It displays the total number of sites along with their domains, titles, descriptions, and IPFS/Hyper public keys. The list is automatically filtered, sorted, and sanitized before generating a static HTML page for easy browsing of DWeb sites.
+
+GitHub: https://github.com/hyphacoop/explore.distributed.press/
+
+Website: https://explore.distributed.press/
+
+## Adding a Manual Site
+
+Some sites may not be auto-crawled, but you can manually add them. To do this, edit the site data file `manualSites.json` and append a new entry:
+```js
+[
+    {
+      "domain": "manual-site-1.com",
+      "metadata": {
+        "title": "Manually Added Site",
+        "description": "This site was added manually."
+      },
+      "links": {
+        "http": {
+          "enabled": true,
+          "link": "http://manual-site-1.com"
+        },
+        "hyper": {
+          "enabled": false
+        },
+        "ipfs": {
+          "enabled": false
+        }
+      },
+      "public": true
+    }
+]
+```
+
+After adding sites, generate the index by running:
+```sh
+npm start
+```
+
+This will generate files for the indexer in the `./public` directory.
