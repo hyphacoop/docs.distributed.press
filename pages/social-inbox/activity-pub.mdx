@@ -21,7 +21,7 @@ Inbox to check what activities are there.
 
 Rejected activities are currently not stored anywhere.
 
-Example: <https://social.distributed.press/v1/@distributed@distributed.press/inbox>
+Example: [https://social.distributed.press/v1/@distributed@distributed.press/inbox](https://social.distributed.press/v1/@distributed@distributed.press/inbox)
 
 ## Outbox (notifications)
 
@@ -112,16 +112,16 @@ encoding.
 Examples:
 
 * Activity:
-  <https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page.jsonld>
-* Shares: <https://social.distributed.press/v1/@distributed@distributed.press/inbox/shares/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=>
-* Likes: <https://social.distributed.press/v1/@distributed@distributed.press/inbox/likes/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=>
+  [https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page.jsonld](https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page.jsonld)
+* Shares: [https://social.distributed.press/v1/@distributed@distributed.press/inbox/shares/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=](https://social.distributed.press/v1/@distributed@distributed.press/inbox/shares/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=)
+* Likes: [https://social.distributed.press/v1/@distributed@distributed.press/inbox/likes/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=](https://social.distributed.press/v1/@distributed@distributed.press/inbox/likes/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=)
 
 ## Replies
 
 Like shares and likes, approved replies are also added to the replies
 collection of every activity.
 
-Example: <https://social.distributed.press/v1/@distributed@distributed.press/inbox/replies/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=>
+Example: [https://social.distributed.press/v1/@distributed@distributed.press/inbox/replies/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=](https://social.distributed.press/v1/@distributed@distributed.press/inbox/replies/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=)
 
 ## Parts you should implement yourself
 
@@ -139,7 +139,7 @@ We found that Mastodon doesn't pull this information, so it sits mostly
 unused.  But it's nice to have available for spec compliance and
 discovery.
 
-Example: <https://distributed.press/outbox.jsonld>
+Example: [https://distributed.press/outbox.jsonld](https://distributed.press/outbox.jsonld)
 
 ### Actor
 
@@ -155,7 +155,7 @@ Please note that the public key needs to be embedded on the Actor
 itself, otherwise Mastodon and others won't be able to authenticate
 requests.
 
-Example: <https://distributed.press/about.jsonld>
+Example: [https://distributed.press/about.jsonld](https://distributed.press/about.jsonld)
 
 ### Webfinger
 
@@ -163,7 +163,7 @@ When trying to convert a user mention like
 `@distributed@distributed.press` into an Actor object, remote instances
 will query the webfinger address.
 
-Example: <https://distributed.press/.well-known/webfinger>
+Example: [https://distributed.press/.well-known/webfinger](https://distributed.press/.well-known/webfinger)
 
 ### Activities
 
@@ -176,4 +176,4 @@ Though according to the spec the Create/Update can reference the object
 object to be embedded into the Create/Update itself, and won't
 dereference it.
 
-Example: <https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page/update/1742565433.jsonld>
+Example: [https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page/update/1742565433.jsonld](https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page/update/1742565433.jsonld)
