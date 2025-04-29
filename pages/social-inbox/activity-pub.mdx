@@ -1,0 +1,179 @@
+# Activity Pub
+
+The Social Inbox implements the [ActivityPub
+specification](https://www.w3.org/TR/activitypub/)'s dynamic parts,
+such as handling incoming notifications, follow requests, likes, boosts,
+and sending out notifications, as well as related specifications, like
+[Webfinger](https://webfinger.net/)
+
+## Inbox
+
+The [Inbox](https://www.w3.org/TR/activitypub/#inbox) receives
+activities from other actors and remote instances, such as Like,
+Announce, Follow, and replies in the form of Create and Update.
+
+Depending on your blocklist and allowlist, activities may be put on
+pause, accepted or rejected.
+
+The Inbox is a paginated collection that holds any activity received and
+stored, irrespective of their paused/approved status.  Only query the
+Inbox to check what activities are there.
+
+Rejected activities are currently not stored anywhere.
+
+Example: <https://social.distributed.press/v1/@distributed@distributed.press/inbox>
+
+## Outbox (notifications)
+
+To notify followers of your activities, send them as a POST request to
+your outbox.
+
+## Followers
+
+The [Followers](https://www.w3.org/TR/activitypub/#followers) collection
+contains a list of remote Actors that have sent a Follow request and was
+approved.
+
+When you send a Create/Update/Delete activity to your outbox, followers
+are notified on their inboxes.
+
+Unauthenticated clients can request the followers collection and get
+back just the totalItems for rendering in user interfaces. The owner of
+the followers collection can make an authenticated request to get the
+full list.
+
+
+## Interacted
+
+This is an out-of-spec and internal collection that keeps track of any
+actor that has ever interacted with your activities, even if they don't
+follow you anymore.
+
+It helps the Social Inbox notify remote instances when an activity is
+deleted.
+
+## Handled activities
+
+Activities the Social Inbox processes.
+
+### Follow
+
+When a Follow request is received, and is approved (either automatically
+or manually), the Actor is added to the followers collection and the
+Social Inbox sends out the activities from the outbox to backfill the
+profile.
+
+When the Follow request is rejected, the remote instance receives a
+Reject activity.
+
+### Create/Update
+
+Create/Update activities are added to the Inbox when their actor is not
+blocklisted.
+
+When rejected, the Social Inbox will receive the activity, notify the
+onRejected webhook, remove it from the Inbox, but otherwise won't notify
+the remote instance with a Reject activity.
+
+### Delete
+
+When a Delete activity is received, the request is authenticated to the
+actor, and both actors are compared. Once the actor is verified to be
+the original author, the Delete activity gets auto-approved regardless
+of the moderation status of the activity or its actor.
+
+The Delete activity is added to the Inbox.  There's currently an [open
+issue about deleting objects from the
+inbox](https://github.com/hyphacoop/social.distributed.press/issues/101).
+
+### Undo
+
+An Undone activity is auto-approved regardless of moderation status and
+removes the activity from the Inbox.  The actor is verified in the same
+way as Delete activities.
+
+If the Undo activity refered to a Follower, the Actor is removed from
+the Followers collection.
+
+### Like and Announce
+
+Like and Announce activities are added to the Inbox.  When approved,
+they're also added to the likes and shares collections of each activity.
+The collections only return their contents for signed requests, total
+items are public.
+
+You can add these collections (plus replies) to your activities for
+discovery, though we're not sure other implementations actually use
+them.
+
+The id of the activity is base64 encoded to prevent issues with
+encoding.
+
+Examples:
+
+* Activity:
+  <https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page.jsonld>
+* Shares: <https://social.distributed.press/v1/@distributed@distributed.press/inbox/shares/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=>
+* Likes: <https://social.distributed.press/v1/@distributed@distributed.press/inbox/likes/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=>
+
+## Replies
+
+Like shares and likes, approved replies are also added to the replies
+collection of every activity.
+
+Example: <https://social.distributed.press/v1/@distributed@distributed.press/inbox/replies/aHR0cHM6Ly9kaXN0cmlidXRlZC5wcmVzcy8yMDI1LzAzLzIxL2J1aWxkLXlvdXItY2Vuc29yc2hpcC1yZXNpc3RhbnQtZG9uYXRpb24tcGFnZS5qc29ubGQ=>
+
+## Parts you should implement yourself
+
+When you're building your static site or fediverse client, some parts of
+the ActivityPub spec need to be managed by you.
+
+You can use one of the integrations or client libraries.
+
+### Outbox (object)
+
+The [outbox](https://www.w3.org/TR/activitypub/#outbox) is a collection
+where your activities are stored.
+
+We found that Mastodon doesn't pull this information, so it sits mostly
+unused.  But it's nice to have available for spec compliance and
+discovery.
+
+Example: <https://distributed.press/outbox.jsonld>
+
+### Actor
+
+The [Actor](https://www.w3.org/TR/activitypub/#actor-objects) is the
+profile of your website on the Fediverse.
+
+It links to collections like the Inbox and Outbox.
+
+It also contains the public key that remote instances fetch to
+authenticate requests from the Social Inbox.
+
+Please note that the public key needs to be embedded on the Actor
+itself, otherwise Mastodon and others won't be able to authenticate
+requests.
+
+Example: <https://distributed.press/about.jsonld>
+
+### Webfinger
+
+When trying to convert a user mention like
+`@distributed@distributed.press` into an Actor object, remote instances
+will query the webfinger address.
+
+Example: <https://distributed.press/.well-known/webfinger>
+
+### Activities
+
+If you want to send out interactions to remote instances, such as
+notifying followers of a new post in a way it appears on their timeline,
+you need to craft a Create/Update activity.
+
+Though according to the spec the Create/Update can reference the object
+(ie. a Note) by its id (URL), in practice Mastodon and other expect this
+object to be embedded into the Create/Update itself, and won't
+dereference it.
+
+Example: <https://distributed.press/2025/03/21/build-your-censorship-resistant-donation-page/update/1742565433.jsonld>
