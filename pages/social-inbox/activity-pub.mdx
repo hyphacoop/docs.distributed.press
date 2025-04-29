@@ -37,6 +37,12 @@ approved.
 When you send a Create/Update/Delete activity to your outbox, followers
 are notified on their inboxes.
 
+Unauthenticated clients can request the followers collection and get
+back just the totalItems for rendering in user interfaces. The owner of
+the followers collection can make an authenticated request to get the
+full list.
+
+
 ## Interacted
 
 This is an out-of-spec and internal collection that keeps track of any
@@ -71,8 +77,10 @@ the remote instance with a Reject activity.
 
 ### Delete
 
-When a Delete activity is received, it gets auto-approved regardless of
-the moderation status of its actor.
+When a Delete activity is received, the request is authenticated to the
+actor, and both actors are compared. Once the actor is verified to be
+the original author, the Delete activity gets auto-approved regardless
+of the moderation status of the activity or its actor.
 
 The Delete activity is added to the Inbox.  There's currently an [open
 issue about deleting objects from the
@@ -81,7 +89,8 @@ inbox](https://github.com/hyphacoop/social.distributed.press/issues/101).
 ### Undo
 
 An Undone activity is auto-approved regardless of moderation status and
-removes the activity from the Inbox.
+removes the activity from the Inbox.  The actor is verified in the same
+way as Delete activities.
 
 If the Undo activity refered to a Follower, the Actor is removed from
 the Followers collection.
