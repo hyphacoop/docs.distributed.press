@@ -9,7 +9,7 @@ for the enabled protocols.
 
 ### IPFS
 For IPFS, the associated logic is [in this file](https://github.com/hyphacoop/api.distributed.press/blob/main/protocols/ipfs.ts).
-The main things you need to know is that Distributed Press keeps a long-running [Kubo](https://www.npmjs.com/package/go-ipfs)
+The main things you need to know is that Distributed Press keeps a long-running [helia](https://helia.io/)
 instance that is spun-up when Distributed Press starts up. This connection is managed by `js-ipfsd-ctl`.
 
 We then copy the files to an IPFS [Mutable File System (MFS)](https://docs.ipfs.tech/concepts/file-systems/) and 
